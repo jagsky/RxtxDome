@@ -73,14 +73,21 @@ public class SerialReader implements Runnable, SerialPortEventListener {
                 break;
             case SerialPortEvent.RI://响铃侦测
                 break;
-            //接受串口发过来的数据
+            //接受串口发过来的数据,发过来的Ascii码
             case SerialPortEvent.DATA_AVAILABLE://串口中可用数据
                 int newDate = 0;
                 int i = 0;
-                do {
+                try {
+                    int read = inputStream.read();
+                    char c = (char)read;
+                    System.out.println(c);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+               /* do {
                     try {
                         newDate = inputStream.read();
-                        System.out.println(newDate);
+                        System.out.println(newDate-49);
                         i++;
                         if (i == 24) {
                             newDate = -1;
@@ -90,7 +97,7 @@ public class SerialReader implements Runnable, SerialPortEventListener {
                     }
                 }
                 while (newDate != -1);
-                //serialPort.close();
+                //serialPort.close();*/
                 break;
             case SerialPortEvent.OUTPUT_BUFFER_EMPTY://输出缓冲区已清空信息
                 break;
